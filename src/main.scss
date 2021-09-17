@@ -1,0 +1,123 @@
+// ************ RESET STYLES ******
+html, body, div, h1, h2, h3, h4, h5, h6, main, header, section, footer, p {
+  margin: 0;
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+  font-family: "sans-serif";
+}
+// *********************************
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__title {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+  }
+}
+.header-container, .filter-container, .description-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0.5rem 2rem;
+  max-width: 1200px;
+  p {
+    margin: 0;
+  }
+}
+.header-block {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 2rem;
+  color: black;
+  &__data {
+    justify-self: end;
+  }
+  &__title { }
+  &__name, &__rating {
+    color: gray;
+    font-size: 1.125rem;
+    padding: 0.5rem 0;
+  }
+  &__rating {
+    justify-self: end;
+    color: rgb(47, 189, 47)
+  }
+}
+.description-container {
+  font-size: 1rem;
+  &__title {
+    color: black;
+  }
+  &__name{
+    color: gray;
+    padding: 0.5rem 0;
+  }
+}
+.filter-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  padding: 1rem 0;
+  border-bottom: 1px solid #80808021;
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+  &__left {
+    display: flex;
+    align-items: center;
+  }
+}
+.filter-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.2rem 1rem;
+  font-size: 1rem;
+  color: rgba(128, 128, 128, 0.479);
+  &__active {
+    border-radius: 8px;
+    border: 2px solid #34c158;
+    box-shadow: 0 0 4px 1px rgb(107 208 132 / 77%);
+    color: black;
+    cursor: pointer;
+  }
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+.legend-container {
+  position: absolute;
+  display: grid;
+  column-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  top: 1rem;
+  left: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(128, 128, 128, 0.267);
+  border-radius: 5px;
+  z-index: 100;
+  &__right {
+    justify-self: end;
+    color: black;
+  }
+  &__left {
+    color: gray;
+  }
+  p {
+    margin: 0;
+  }
+}
+.dash {
+  height: 1px;
+  width: 0.7rem;
+  margin: 0 0.5rem;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.541);
+}
