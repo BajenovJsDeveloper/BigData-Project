@@ -46,7 +46,10 @@ html {
   }
   &__rating {
     justify-self: end;
-    color: rgb(47, 189, 47)
+    color: rgb(47, 189, 47);
+    &.negative {
+      color: rgba(190, 25, 25, 0.747);
+    }
   }
 }
 .description-container {

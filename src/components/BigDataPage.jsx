@@ -62,6 +62,9 @@ export function BigDataPage() {
   const formatCurrency = (num) => {
     return formatNumberToLoclae(num, companyData.currency)
   }
+  const formatCahangeStyle = () => {
+    return `header-block__rating ${companyData.change < 0 ? 'negative': ''}`
+  }
 
   return (
     <div className="main-container">
@@ -73,7 +76,7 @@ export function BigDataPage() {
         </div>
         <div className="header-block">
           <p className="header-block__name">{companyData.companyName}. - Telecomunnications equipment</p>
-          <p className="header-block__rating">{companyData.change}%</p>
+          <p className={formatCahangeStyle()}>{companyData.change}%</p>
         </div>
       </header>
       <section className="description-container">
