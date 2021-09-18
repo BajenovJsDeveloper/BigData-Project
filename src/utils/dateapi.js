@@ -1,12 +1,24 @@
 import moment from 'moment'
 import _ from 'lodash'
 
+const INTERVAL = {
+  'all': 1825,
+  '5y': 730,
+  '2y': 365,
+  '1y': 182,
+  '6m': 91,
+  '3m': 30,
+  '1m': 5,
+  '5d': 1
+}
+
 const DAYS_PER_MONTH = 30
 const DEFAULT_RANGE = '1m'
+const PER_10_MIN = 5
+const TWO_DAYS = 2
 const YEAR = 12
 const WEEK = 7
-const TWO_DAYS = 2
-const PER_10_MIN = 5
+
 
 export const disableDateFromTommorow = (dateA) => {
   if (moment(dateA).isAfter(new Date())) return true
@@ -36,14 +48,14 @@ export const calculateInterval = (date) => {
     if (total === 1) {
       interval.range = `date/${moment(dateA).format('YYYYMMDD')}`
       interval.isOneDay = true
-    } else if (diff > 1825) interval.range = 'all'
-    else if (diff > 730) interval.range = '5y'
-    else if (diff > 365) interval.range = '2y'
-    else if (diff > 182) interval.range = '1y'
-    else if (diff > 91) interval.range = '6m'
-    else if (diff > 30) interval.range = '3m'
-    else if (diff > 5) interval.range = '1m'
-    else if (diff > 1) interval.range = '5d'
+    } else if (diff > INTERVAL['all']) interval.range = 'all'
+    else if (diff > INTERVAL['5y']) interval.range = '5y'
+    else if (diff > INTERVAL['2y']) interval.range = '2y'
+    else if (diff > INTERVAL['1y']) interval.range = '1y'
+    else if (diff > INTERVAL['6m']) interval.range = '6m'
+    else if (diff > INTERVAL['3m']) interval.range = '3m'
+    else if (diff > INTERVAL['1m']) interval.range = '1m'
+    else if (diff > INTERVAL['5d']) interval.range = '5d'
   }
   return interval
 }
@@ -57,7 +69,6 @@ export const fiterChartData = (chartData, daysInterval) => {
       '[]'
     )
   )
-  console.log('Filtered: ', fiteredData)
   if (daysInterval.total > DAYS_PER_MONTH * YEAR) {
     let month = _.groupBy(
       fiteredData,
@@ -101,4 +112,8 @@ export const getInitialData = () => {
     start: moment(-5).format('YYYY-MM-DD'),
     end: moment().format('YYYY-MM-DD'),
   }
+}
+
+export const getInitialError = () => {
+  return { isError: false, title: '' }
 }

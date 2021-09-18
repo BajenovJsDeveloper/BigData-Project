@@ -39,7 +39,7 @@ html {
 .description-container {
   width: 100%;
   max-width: 1200px;
-  padding: 0.5rem 2rem;
+  padding: 0.5rem 0;
   max-width: 1200px;
   p {
     margin: 0;
@@ -70,6 +70,14 @@ html {
     color: rgb(47, 189, 47);
     &.negative {
       color: rgba(190, 25, 25, 0.747);
+    }
+  }
+  @media screen and (max-width: 576px) {
+    &__title, &__data {
+      font-size: 1.5rem;
+    }
+    &__name {
+      font-size: 1rem;
     }
   }
 }
@@ -109,6 +117,9 @@ html {
   padding: 0.2rem 1rem;
   font-size: 1rem;
   color: rgba(128, 128, 128, 0.479);
+  &:hover {
+    background-color: rgba(184, 184, 184, 0.281);
+  }
   &__active {
     border-radius: 8px;
     border: 2px solid #34c158;
@@ -132,7 +143,7 @@ html {
     border: 1px solid rgba(128, 128, 128, 0.267);
     border-radius: 5px;
     background-color: white;
-    z-index: 50;
+    z-index: 1;
     &__show {
       visibility: visible;
       animation-name: FadeIn;
@@ -153,10 +164,6 @@ html {
     p {
       text-transform: capitalize;
       margin: 0;
-    }
-    @media screen and (max-width: 576px) {
-      bottom: 5rem;
-      top: auto;
     }
   }
 }
@@ -195,6 +202,22 @@ html {
     font-weight: bold;
     color: rgb(252, 111, 111);
     margin-bottom: 3rem;
+  }
+}
+.nodata-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: #bbbbbb17;
+  .text {
+    font-size: 18px;
+    color: rgba(128, 128, 128, 0.5);
   }
 }
 .footer-container {

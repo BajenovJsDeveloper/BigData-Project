@@ -1,7 +1,7 @@
 {
   "name": "bigdata",
   "version": "1.0.0",
-  "description": "",
+  "description": "BigData React-App",
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html",
@@ -9,7 +9,7 @@
     "format": "prettier --write src/"
   },
   "keywords": [],
-  "author": "vladimir@bajenov",
+  "author": "vladimir.bajenov",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

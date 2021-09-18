@@ -9,6 +9,7 @@ import {
   fiterChartData,
   getDateTime,
   getInitialData,
+  getInitialError,
 } from '../utils/dateapi'
 import { IntervalFilter } from './IntervalFilter'
 import { Legend } from './Legend'
@@ -16,16 +17,23 @@ import { Loading } from './Loading'
 import { Error } from './Error'
 import { Header } from './Header'
 import { Description } from './Description'
+import { NoData } from './NoData'
 
-const LEGEND_FIELDS = ['open', 'close', 'low', 'hight', 'volume', 'change']
+const LEGEND_FIELDS = ['open', 'close', 'low', 'high', 'volume', 'change']
 const COMPNY_NAME = 'aapl'
+const INTERVAL = 1000 * 30  //interval time 1000ms * 30sec = 0.5min
+const STEP = 10
+const STEP_K = 10
+const CHART_1 = 0
+const CHART_2 = 1
+const STEP_DEFAULT = 1
 
 export function BigDataPage() {
   const [chartOptions, setChartOptions] = useState(options)
   const [companyData, setCompanyData] = useState({})
   const [daysInterval, setDaysInterval] = useState(getInitialData())
   const [showLegend, setShowLegend] = useState(false)
-  const [errorData, setErrorData] = useState({ isError: false, title: '' })
+  const [errorData, setErrorData] = useState(getInitialError())
   const [isLoading, setIsLoading] = useState(false)
   const ref = useRef(null)
 
@@ -35,7 +43,7 @@ export function BigDataPage() {
   }
 
   const onSelectInterval = (value) => {
-    console.log(value)
+    console.log('Selected interval: ',value)
   }
 
   const loadData = async (companyName) => {
@@ -43,9 +51,7 @@ export function BigDataPage() {
     setCompanyData(data)
     const response = await getChartData(companyName, daysInterval)
     if (response.data) {
-      const responseData = response.data
-      const chartData = fiterChartData(responseData, daysInterval)
-      console.log('C-Data: ', chartData)
+      const chartData = fiterChartData(response.data, daysInterval)
       const closes = chartData.map((cdata) => [
         getDateTime(cdata, daysInterval.total),
         Math.round(cdata.close),
@@ -54,13 +60,13 @@ export function BigDataPage() {
         getDateTime(cdata, daysInterval.total),
         cdata.volume,
       ])
-      const koef = chartData.length > 10 ? Math.round(chartData.length / 10) : 1
+      const step = chartData.length > STEP ? Math.round(chartData.length / STEP_K) : STEP_DEFAULT
       const categories = chartData.map((cdata, idx) =>
-        idx % koef === 0 ? getDateTime(cdata, daysInterval.total) : ''
+        idx % step === 0 ? getDateTime(cdata, daysInterval.total) : ''
       )
 
-      SERIES[0].data = volumes
-      SERIES[1].data = closes
+      SERIES[CHART_1].data = volumes
+      SERIES[CHART_2].data = closes
       setChartOptions((prev) => ({
         ...prev,
         series: SERIES,
@@ -99,6 +105,15 @@ export function BigDataPage() {
     }
   }, [ref])
 
+  useEffect(() => {
+    const timerID = setInterval(async () => {
+      console.log('Updating data...')
+      const data = await getCompanyData(COMPNY_NAME)
+      setCompanyData(data)
+    }, INTERVAL)
+    return () => clearInterval(timerID)
+  },[])
+
   return (
     <div className="main-container">
       <Header companyData={companyData} />
@@ -108,6 +123,7 @@ export function BigDataPage() {
         <DatePickerFilter onSelectDate={onSelectDate} />
       </section>
       <section ref={ref} className="chart-container">
+        <NoData seriesData={chartOptions.series}/>
         <Legend items={legendData} show={showLegend} />
         <Error message={errorData.message} isError={errorData.isError} />
         <Loading isLoading={isLoading} />

@@ -1,5 +1,6 @@
 export const formatNumberToLoclae = (num, currency) => {
-  return new Intl.NumberFormat('en-US', {
+  const lang = navigator.language
+  return new Intl.NumberFormat(lang || 'en-US', {
     style: 'currency',
     currency: currency || 'USD',
     minimumFractionDigits: 0,

@@ -6,7 +6,6 @@ export const Legend = ({ items, show }) => {
   }`
   const itemsList = useMemo(() => {
     return items.map((item) => {
-      console.log('List')
       return (
         <React.Fragment key={item.name}>
           <p className="legend-container__left">{item.name}</p>

@@ -15,7 +15,7 @@ export const Header = ({ companyData }) => {
           </div>
           <div className="header-block">
             <p className="header-block__name">
-              {companyData.companyName}. - Telecomunnications equipment
+              {companyData.companyName}. - Telecommunications equipment
             </p>
             <p className={formatCahangeStyle()}>{companyData.change}%</p>
           </div>
