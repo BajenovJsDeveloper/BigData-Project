@@ -1,10 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { getChartData, getCompanyData } from "../utils/fetchdata"
+import { getChartData, getCompanyData } from '../utils/fetchdata'
 import { options, SERIES } from '../utils/chartconfig'
 import { DatePickerFilter } from './DatePickerFilter'
-import { calculateInterval, fiterChartData, getDateTime, getInitialData } from '../utils/dateapi'
+import {
+  calculateInterval,
+  fiterChartData,
+  getDateTime,
+  getInitialData,
+} from '../utils/dateapi'
 import { IntervalFilter } from './IntervalFilter'
 import { Legend } from './Legend'
 import { Loading } from './Loading'
@@ -33,7 +38,7 @@ export function BigDataPage() {
     console.log(value)
   }
 
-  const getData = async(companyName) => {
+  const loadData = async (companyName) => {
     const data = await getCompanyData(companyName)
     setCompanyData(data)
     const response = await getChartData(companyName, daysInterval)
@@ -41,14 +46,26 @@ export function BigDataPage() {
       const responseData = response.data
       const chartData = fiterChartData(responseData, daysInterval)
       console.log('C-Data: ', chartData)
-      const closes = chartData.map(cdata => [getDateTime(cdata, daysInterval.total), Math.round(cdata.close)])
-      const volumes = chartData.map(cdata => [getDateTime(cdata, daysInterval.total), cdata.volume])
+      const closes = chartData.map((cdata) => [
+        getDateTime(cdata, daysInterval.total),
+        Math.round(cdata.close),
+      ])
+      const volumes = chartData.map((cdata) => [
+        getDateTime(cdata, daysInterval.total),
+        cdata.volume,
+      ])
       const koef = chartData.length > 10 ? Math.round(chartData.length / 10) : 1
-      const categories = chartData.map((cdata, idx) => idx % koef === 0 ? getDateTime(cdata, daysInterval.total) : '')
-     
+      const categories = chartData.map((cdata, idx) =>
+        idx % koef === 0 ? getDateTime(cdata, daysInterval.total) : ''
+      )
+
       SERIES[0].data = volumes
       SERIES[1].data = closes
-      setChartOptions(prev => ({ ...prev, series: SERIES, xAxis: { ...prev.xAxis, categories } }))
+      setChartOptions((prev) => ({
+        ...prev,
+        series: SERIES,
+        xAxis: { ...prev.xAxis, categories },
+      }))
       if (chartData.length) setShowLegend(true)
       setErrorData({ isError: false, message: '' })
     } else {
@@ -58,43 +75,43 @@ export function BigDataPage() {
   }
 
   const legendData = useMemo(() => {
-    return LEGEND_FIELDS.map(item => ({ name: item, value: companyData[item] }))
+    return LEGEND_FIELDS.map((item) => ({
+      name: item,
+      value: companyData[item],
+    }))
   }, [companyData])
 
-  useEffect(async() => {
-    if(daysInterval.total) await getData(COMPNY_NAME)
-    if(daysInterval.total === null) {
+  useEffect(async () => {
+    if (daysInterval.total) await loadData(COMPNY_NAME)
+    if (daysInterval.total === null) {
       setIsLoading(true)
-      await getData(COMPNY_NAME)
+      await loadData(COMPNY_NAME)
     }
   }, [daysInterval])
 
   useEffect(() => {
     const showLegend = () => setShowLegend(true)
     const hideLegend = () => setShowLegend(false)
-    if(ref.current) {
+    if (ref.current) {
       ref.current.addEventListener('mouseleave', showLegend)
       ref.current.addEventListener('mouseenter', hideLegend)
-      return  [showLegend, hideLegend]
+      return [showLegend, hideLegend]
     }
   }, [ref])
 
   return (
     <div className="main-container">
-      <Header companyData={companyData}/>
-      <Description companyData={companyData}/>
+      <Header companyData={companyData} />
+      <Description companyData={companyData} />
       <section className="filter-container">
-        <IntervalFilter onSelectInterval={onSelectInterval}/>
-        <DatePickerFilter onSelectDate={onSelectDate}/>
+        <IntervalFilter onSelectInterval={onSelectInterval} />
+        <DatePickerFilter onSelectDate={onSelectDate} />
       </section>
       <section ref={ref} className="chart-container">
-        <Legend items={legendData} show={showLegend}/>
-        <Error message={errorData.message} isError={errorData.isError}/>
-        <Loading isLoading={isLoading}/>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={chartOptions}
-        />
+        <Legend items={legendData} show={showLegend} />
+        <Error message={errorData.message} isError={errorData.isError} />
+        <Loading isLoading={isLoading} />
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       </section>
       <footer className="footer-container"></footer>
     </div>

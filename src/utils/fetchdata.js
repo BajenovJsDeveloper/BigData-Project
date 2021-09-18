@@ -16,11 +16,13 @@ export async function getCompanyData(companyName) {
 
 export async function getChartData(companyName, range) {
   const config = { method: 'get' }
-  config.url = `${URL}${companyName}/chart/${range.range}?${range.isOneDay ? '' : 'chartCloseOnly=true&'}token=${KEY}`
+  config.url = `${URL}${companyName}/chart/${range.range}?${
+    range.isOneDay ? '' : 'chartCloseOnly=true&'
+  }token=${KEY}`
   try {
     const res = await axios(config)
     return { data: res.data }
-  } catch(err) {
+  } catch (err) {
     return { data: null, message: err.message }
   }
 }

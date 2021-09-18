@@ -1,5 +1,18 @@
 // ************ RESET STYLES ******
-html, body, div, h1, h2, h3, h4, h5, h6, main, header, section, footer, p {
+html,
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+main,
+header,
+section,
+footer,
+p {
   margin: 0;
   padding: 0;
   display: block;
@@ -7,7 +20,7 @@ html, body, div, h1, h2, h3, h4, h5, h6, main, header, section, footer, p {
 }
 html {
   font-size: 16px;
-  font-family: "sans-serif";
+  font-family: 'sans-serif';
 }
 // *********************************
 
@@ -21,7 +34,9 @@ html {
     padding: 0 0.5rem;
   }
 }
-.header-container, .filter-container, .description-container {
+.header-container,
+.filter-container,
+.description-container {
   width: 100%;
   max-width: 1200px;
   padding: 0.5rem 2rem;
@@ -42,8 +57,10 @@ html {
   &__data {
     justify-self: end;
   }
-  &__title { }
-  &__name, &__rating {
+  &__title {
+  }
+  &__name,
+  &__rating {
     color: gray;
     font-size: 1.125rem;
     padding: 0.5rem 0;
@@ -61,7 +78,7 @@ html {
   &__title {
     color: black;
   }
-  &__name{
+  &__name {
     color: gray;
     padding: 0.5rem 0;
   }
@@ -153,7 +170,7 @@ html {
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.877);
   z-index: 50;
-  &__text { 
+  &__text {
     margin-top: 3rem;
     font-size: 1.3rem;
     font-weight: bold;
@@ -211,7 +228,13 @@ html {
   }
 }
 @keyframes Opacity {
-  0% { opacity: 0; }
-  50% { opacity: 1; }
-  100% { opacity: 0;}
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

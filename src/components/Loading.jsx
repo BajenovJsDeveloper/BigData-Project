@@ -1,4 +1,4 @@
-import React from  'react'
+import React from 'react'
 
 export const Loading = ({ isLoading }) => {
   if (!isLoading) return null
