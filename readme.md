@@ -1,10 +1,10 @@
-#Big Data Charts React App
+# Big Data Charts React App
 ---
 
 ![Graphic](logo/big-data.png)
 
 ---
-###Setup instruction
+### Setup instruction
 _At first you need to install project with all dependencies_
 >  npm install
 
