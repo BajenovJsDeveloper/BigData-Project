@@ -14,7 +14,7 @@ Or
 
 _This command will install all dependencies and  create  folder_ **node_modules**
 
-After you nedd to createin in root dirictory **.env** file with _secret_key_
+After that you need to create in root dirictory **.env** file with _secret_key_
 
 > REACT_APP_IEXCLOUD_KEY=_my_secret_public_key_
 
@@ -22,7 +22,7 @@ That is it!
 
 ---
 
-Next you just start poject with command bellow
+Next you just have to start project with command bellow
 
 > npm run dev
 
