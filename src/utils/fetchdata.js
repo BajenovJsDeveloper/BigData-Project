@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const KEY = 'pk_a1025c193c844f8cb9883dd25a35135e'
+const KEY = 'pk_4323df58e0444048b31b91978d500870'
 const URL = 'https://cloud.iexapis.com/stable/stock/'
 
 export async function getCompanyData(companyName) {
@@ -16,11 +16,11 @@ export async function getCompanyData(companyName) {
 
 export async function getChartData(companyName, range) {
   const config = { method: 'get' }
-  config.url = `${URL}${companyName}/chart/${range}?chartCloseOnly=true&token=${KEY}`
+  config.url = `${URL}${companyName}/chart/${range.range}?${range.isOneDay ? '' : 'chartCloseOnly=true&'}token=${KEY}`
   try {
     const res = await axios(config)
-    return res.data
-  } catch {
-    return []
+    return { data: res.data }
+  } catch(err) {
+    return { data: null, message: err.message }
   }
 }
